@@ -16,7 +16,6 @@ print("")
 # A = g^a mod p
 A = (g**KR_a) % p
 print("P1 Sends Over Public Channel: " , A)
- 
 # B = g^b mod p
 B = (g**KR_b) % p
 print("P2 Sends Over Public Channel: ", B)
@@ -26,7 +25,6 @@ print("")
 # P1 Computes Shared Secret: s = B^a mod p
 K_a = (B ** KR_a) % p
 print("P1 Shared Secret: ", K_a)
- 
 # P2 Computes Shared Secret: s = A^b mod p
 K_b = (A ** KR_b) % p
 print("P2 Shared Secret: ", K_b)
