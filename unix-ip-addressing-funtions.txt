@@ -1,0 +1,44 @@
+The following three function calls are used for IPv4 addressing:
+
+> int inet_aton(const char *strptr, struct in_addr *addrptr)
+
+#include <arpa/inet.h>
+
+(...)
+
+   int retval;
+   struct in_addr addrptr
+   
+   memset(&addrptr, '\0', sizeof(addrptr));
+   retval = inet_aton("68.178.157.132", &addrptr);
+
+(...)
+
+
+> in_addr_t inet_addr(const char *strptr)
+
+#include <arpa/inet.h>
+
+(...)
+
+   struct sockaddr_in dest;
+
+   memset(&dest, '\0', sizeof(dest));
+   dest.sin_addr.s_addr = inet_addr("68.178.157.132");
+   
+(...)
+
+
+> char *inet_ntoa(struct in_addr inaddr)
+
+#include <arpa/inet.h>
+
+(...)
+
+   char *ip;
+   
+   ip = inet_ntoa(dest.sin_addr);
+   
+   printf("IP Address is: %s\n",ip);
+   
+(...)
