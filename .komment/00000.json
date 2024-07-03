@@ -1,0 +1,275 @@
+[
+  {
+    "name": "hashing-message-authentication-code-algorithm.py",
+    "path": "hashing-message-authentication-code-algorithm.py",
+    "content": {
+      "structured": {
+        "description": "An HMAC class for generating hashed messages using a provided key and a specified digest algorithm. The class provides properties and methods for generating and manipulating HMACs, including a `digest` method that uses the provided digest algorithm to generate a hash of the message. Additionally, the code includes a `new` function for creating a new HMAC instance with a given key and digest algorithm, and a `digest` function for generating a hashed message using a given key and digest algorithm. The code also defines various constants and functions used in the implementation of the HMAC class.",
+        "items": [
+          {
+            "id": "facefafa-2d5e-fcae-014c-b02864a27eef",
+            "ancestors": [],
+            "description": "Generates an HMAC (Hash-based Message Authentication Code) based on a given key and message. It takes care of generating the inner and outer hashes, handling the block size, and returning the final digest.",
+            "attributes": [
+              {
+                "name": "blocksize",
+                "type_name": "int",
+                "description": "64 by default, which represents the size of the block to be used when hashing the message. It can be changed through the constructor or property setters."
+              },
+              {
+                "name": "digest_cons",
+                "type_name": "instance",
+                "description": "The lambda function that generates the digest of the input message when called."
+              },
+              {
+                "name": "outer",
+                "type_name": "instance",
+                "description": "Used to store the result of updating a message using the underlying digest algorithm, such as SHA-256 or SHA-512."
+              },
+              {
+                "name": "inner",
+                "type_name": "instance",
+                "description": "Used for hashing password. It is initialized with a digest object, which is used to hash the password."
+              },
+              {
+                "name": "digest_size",
+                "type_name": "int",
+                "description": "36 bits by default, indicating the size of the digest block used for hashing."
+              },
+              {
+                "name": "block_size",
+                "type_name": "int",
+                "description": "64 by default. It represents the size of the block used for the HMAC calculation."
+              },
+              {
+                "name": "update",
+                "type_name": "method",
+                "description": "Used to update the inner digest with a given message."
+              }
+            ],
+            "name": "HMAC",
+            "location": {
+              "start": 22,
+              "insert": 24,
+              "offset": " ",
+              "indent": 4,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 77,
+            "docLength": null
+          },
+          {
+            "id": "8b384449-3e3a-00b4-1a41-8366c55ff0ac",
+            "ancestors": [
+              "facefafa-2d5e-fcae-014c-b02864a27eef"
+            ],
+            "description": "Of the HMAC class initializes instance variables and performs key and digest manipulation before updating the outer and inner states of the object.",
+            "params": [
+              {
+                "name": "key",
+                "type_name": "bytes",
+                "description": "Required to be passed as an argument during construction of the object."
+              },
+              {
+                "name": "msg",
+                "type_name": "object",
+                "description": "Optional, it is used to update the message digest with additional data."
+              },
+              {
+                "name": "digestmod",
+                "type_name": "str",
+                "description": "Required to be set to a hash function name, such as `md5`, `sha256`, or `ripemd160`."
+              }
+            ],
+            "returns": null,
+            "name": "__init__",
+            "location": {
+              "start": 26,
+              "insert": 28,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 46,
+            "docLength": null
+          },
+          {
+            "id": "ed1588c8-5f13-4986-a04b-15a9ff533a36",
+            "ancestors": [
+              "facefafa-2d5e-fcae-014c-b02864a27eef"
+            ],
+            "description": "In the `HMAC` class generates a unique string identifier for the inner object's name, appending it to \"-hmac-\".",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "A concatenation of the string \"hmac-\" and the value of its inner attribute `name`."
+            },
+            "name": "name",
+            "location": {
+              "start": 73,
+              "insert": 75,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "96beb2e4-9f04-6eb0-6a44-d2f77fee00bc",
+            "ancestors": [
+              "facefafa-2d5e-fcae-014c-b02864a27eef"
+            ],
+            "description": "Updates the inner state of an instance of the `HMAC` class with the given message `msg`.",
+            "params": [
+              {
+                "name": "msg",
+                "type_name": "objectinstance",
+                "description": "Updated with an object or instance value by calling the update method on it."
+              }
+            ],
+            "returns": null,
+            "name": "update",
+            "location": {
+              "start": 77,
+              "insert": 79,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "b6314b71-9a96-a79d-d643-dee7bfb46b1b",
+            "ancestors": [
+              "facefafa-2d5e-fcae-014c-b02864a27eef"
+            ],
+            "description": "Creates a new instance of the `HMAC` class with the same attributes as the original, except for the digest values which are copied and the inner and outer objects which are also copied.",
+            "params": [],
+            "returns": {
+              "type_name": "other",
+              "description": "An instance of the same class as the original object, containing copied values of `digest_cons`, `digest_size`, `inner`, and `outer`."
+            },
+            "name": "copy",
+            "location": {
+              "start": 81,
+              "insert": 82,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 7,
+            "docLength": null
+          },
+          {
+            "id": "a60c1456-40bd-d59d-ac48-db6381d2c816",
+            "ancestors": [
+              "facefafa-2d5e-fcae-014c-b02864a27eef"
+            ],
+            "description": "Updates the outer object's state by copying the inner digest and merging it with the existing outer state, returning the updated outer state.",
+            "name": "_current",
+            "location": {
+              "start": 89,
+              "insert": 90,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": null
+          },
+          {
+            "id": "61919b78-5180-08a5-ca40-10bf59a00151",
+            "ancestors": [
+              "facefafa-2d5e-fcae-014c-b02864a27eef"
+            ],
+            "description": "Computes the digest of the current state of an HMAC object using the underlying hash function.",
+            "params": [],
+            "returns": {
+              "type_name": "hmacdigest",
+              "description": "A subclass of bytes representing the result of hashing the current state of the HMAC algorithm."
+            },
+            "name": "digest",
+            "location": {
+              "start": 94,
+              "insert": 95,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "c8cc7821-a9f4-478b-4b41-dfd12297418a",
+            "ancestors": [
+              "facefafa-2d5e-fcae-014c-b02864a27eef"
+            ],
+            "description": "In the `HMAC` class generates the hexadecimal digest of the current state of the object's internal buffer using the `hexdigest` method of the `hashlib` module.",
+            "params": [],
+            "returns": {
+              "type_name": "str",
+              "description": "A hexadecimal representation of the current value of an object."
+            },
+            "name": "hexdigest",
+            "location": {
+              "start": 98,
+              "insert": 99,
+              "offset": " ",
+              "indent": 8,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "e8925bcd-24d3-05a4-864b-b9c856a59060",
+            "ancestors": [],
+            "description": "Takes a key, message, and digest as input and performs an authentication or message integrity check using either OpenSSL's HMAC method or Hashlib's SHA-256 hash function, depending on the type of digest provided.",
+            "params": [
+              {
+                "name": "key",
+                "type_name": "str",
+                "description": "Used for hashing purposes."
+              },
+              {
+                "name": "msg",
+                "type_name": "str",
+                "description": "Passed as input to the function for hashing."
+              },
+              {
+                "name": "digest",
+                "type_name": "OpenSSLHMACDigest",
+                "description": "Used to specify the hash algorithm for the message digest calculation."
+              }
+            ],
+            "returns": {
+              "type_name": "bytes",
+              "description": "The result of applying a message authentication code (MAC) to the given `key`, `msg`, and `digest` parameters using OpenSSL or hashlib library."
+            },
+            "name": "digest",
+            "location": {
+              "start": 106,
+              "insert": 107,
+              "offset": " ",
+              "indent": 4,
+              "comment": null
+            },
+            "item_type": "function",
+            "length": 29,
+            "docLength": null
+          }
+        ]
+      }
+    }
+  }
+]
