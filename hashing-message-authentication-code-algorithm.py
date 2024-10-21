@@ -21,10 +21,53 @@ digest_size = None
 
 class HMAC:
    
+    """
+    Implements the Keyed-Hash Message Authentication Code (HMAC) algorithm. It
+    takes a key and a message, and uses a cryptographic hash function to generate
+    a message authentication code (MAC).
+
+    Attributes:
+        blocksize (int): Initialized with a value of 64. It represents the block
+            size used for padding the key.
+        digest_cons (Callable[[bytes],_hashlibnew|digestmod]): Initialized in the
+            `__init__` method to either a digest object or a lambda function
+            creating a digest object based on the digestmod parameter.
+        outer (_hashlibnewobject|None): Initialized in the `__init__` method to
+            an instance of the digest algorithm specified by `digestmod`, which
+            is used for the outer hash operation of the HMAC algorithm.
+        inner (HashAlgorithm): Used in the inner hash calculation of the HMAC
+            algorithm. It is created in the `__init__` method and its digest size
+            is used to determine the block size of the HMAC algorithm.
+        digest_size (int): Initialized with the value of `self.inner.digest_size`.
+        block_size (int|None): Initialized to 64. It represents the block size
+            used for hash operations, but if the hash object has a `block_size`
+            attribute, it is used instead.
+        update (Callable[[bytes],None]): Used to append more data to the message
+            being hashed, effectively updating the HMAC object.
+
+    """
     blocksize = 64  # 512-bit HMAC; can be changed in subclasses.
 
     def __init__(self, key, msg = None, digestmod = None):
         
+        """
+        Initializes an HMAC object, performing the following tasks:
+        - Verifies the key and digestmod inputs, raising errors if invalid.
+        - Creates two digest objects, `outer` and `inner`, based on the digestmod.
+        - Determines the block size, using a default if not specified.
+        - Truncates or pads the key to the block size.
+        - Updates the `outer` and `inner` digest objects with the key.
+
+        Args:
+            key (bytes | bytearray): Required for initializing the object. It is
+                expected to be a bytes or bytearray object, and its length is
+                checked against the block size of the hash function.
+            msg (bytes | str): Optional, with a default value of None. It represents
+                the message to be processed by the hash object.
+            digestmod (Callable or str or DigestModType): Required to initialize
+                the hash object.
+
+        """
         if not isinstance(key, (bytes, bytearray)):
             raise TypeError("key: expected bytes or bytearray, but got %r" % type(key).__name__)
 
@@ -72,13 +115,41 @@ class HMAC:
 
     @property
     def name(self):
+        """
+        Constructs a string representing the name of an HMAC object, combining the
+        prefix "hmac-" with the name of its inner hash object.
+
+        Returns:
+            str: Concatenation of string "hmac-" with the result of calling
+            `self.inner.name`, where `self.inner` is an object of a class, presumably
+            containing a method `name`.
+
+        """
         return "hmac-" + self.inner.name
 
     def update(self, msg):
         
+        """
+        Updates the inner hash object with the provided message data.
+
+        Args:
+            msg (Any): Used to pass a message to the `update` function, which is
+                then passed to the `inner` object's `update` method.
+
+        """
         self.inner.update(msg)
 
     def copy(self):
+        """
+        Creates a deep copy of the HMAC object, duplicating its properties and
+        internal state, including the inner and outer hash objects and their digest
+        sizes and values.
+
+        Returns:
+            self__class____new__self__class__: An instance of the same class as
+            the original object, containing copies of the original object's attributes.
+
+        """
         other = self.__class__.__new__(self.__class__)
         other.digest_cons = self.digest_cons
         other.digest_size = self.digest_size
@@ -87,15 +158,36 @@ class HMAC:
         return other
 
     def _current(self):
+        """
+        Updates the outer hash object with the inner hash digest, returning the
+        updated outer hash object.
+
+        """
         h = self.outer.copy()
         h.update(self.inner.digest())
         return h
 
     def digest(self):
+        """
+        Returns the digest of the current HMAC object, which is the result of
+        hashing the message using the HMAC algorithm.
+
+        Returns:
+            bytes: The digest of the hash object `h`.
+
+        """
         h = self._current()
         return h.digest()
 
     def hexdigest(self):
+        """
+        Returns the hexadecimal representation of the hash digest of the HMAC object.
+
+        Returns:
+            str: The hexadecimal representation of the hash value generated by the
+            hash object.
+
+        """
         h = self._current()
         return h.hexdigest()
 
@@ -104,6 +196,25 @@ def new(key, msg = None, digestmod = None):
 
 
 def digest(key, msg, digest):
+    """
+    Implements a custom HMAC (Keyed-Hash Message Authentication Code) algorithm,
+    allowing for various digest algorithms and key sizes. It extends the standard
+    HMAC algorithm with a custom key padding and translation mechanism.
+
+    Args:
+        key (bytes): Used to generate a fixed-size key for the HMAC algorithm. It
+            may be provided as input or generated from a longer key.
+        msg (bytes): The message to be digested, or more specifically, the data
+            to be hashed and encrypted using a message digest algorithm.
+        digest (str | Callable[[bytes], HashObject]): Used to specify either an
+            OpenSSL digest method name or a callable that returns a hash object.
+
+    Returns:
+        bytes: The digest of the message `msg` after being processed through a
+        two-layer HMAC (Keyed-Hashing for Message Authentication) mechanism using
+        the provided key and digest algorithm.
+
+    """
     if (_hashopenssl is not None and
             isinstance(digest, str) and digest in _openssl_md_meths):
         return _hashopenssl.hmac_digest(key, msg, digest)
